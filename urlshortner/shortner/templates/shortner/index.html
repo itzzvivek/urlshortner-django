@@ -1,0 +1,66 @@
+<head>
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<style>
+
+h1{
+    text-align: center;
+    margin-top: 200px;
+}
+
+input{
+       width: 500px;
+       height: 50px;
+       border: 1px solid black;
+       margin: 0 0 0 480px;
+       border-radius: 5px;
+}
+
+button{
+        width: 100px;
+        height: 50px;
+        border: 1px solid black;
+        border-radius: 5px;
+}
+
+button:hover{
+       color: white;
+       background-color: #ddd;
+       cursor: pointer;
+}
+
+section{
+        margin: 50px 0 0 630px
+
+}
+</style>
+</head>
+<main>
+  <h1>Url Shortener Appliction</h1>
+
+  <form id="post-form">
+      {% csrf_token %}
+      <input type="text" name="link" id="link" placeholder="Enter URL here"Required>
+      <button type="submit" id="shorten"><b>Short</b></button>
+  </form>
+
+        <section id="section"><h2><a href="#"></a></h2></section>
+
+</main>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/create',
+      data:{
+        link:$('#link').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('a').html("localhost:8000/"+data)
+      }
+    });
+  });
+</script>
